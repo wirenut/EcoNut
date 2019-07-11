@@ -3,22 +3,24 @@ package org.wnut.EcoNut.Managers;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.UUID;
 
 public class EconManager implements Economy {
 
     @Override
     public boolean isEnabled(){
-        return false;
+        return true;
     }
 
     @Override
     public String getName(){
         return null;
     }
-
 
 
     @Override
@@ -33,17 +35,17 @@ public class EconManager implements Economy {
 
     @Override
     public String format(double v){
-        return null;
+        return "Nutty Coins";
     }
 
     @Override
     public String currencyNamePlural(){
-        return null;
+        return "Nutty Coins";
     }
 
     @Override
     public String currencyNameSingular(){
-        return null;
+        return "Nutty Coins";
     }
 
     @Override
@@ -67,7 +69,7 @@ public class EconManager implements Economy {
     @Override
     public boolean hasAccount(OfflinePlayer offlinePlayer, String worldName){
         // To Validate from econ players yml
-        return null;
+        return false;
     }
 
     @Override
@@ -119,13 +121,14 @@ public class EconManager implements Economy {
 
         Player player = Bukkit.getPlayer(UUID.fromString(uuid));
 
-        if (hasAccount(uuid)){
+        /* if (hasAccount(uuid)){
             double balance = 0;
 
             return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.SUCCESS, "Paid Money");
 
             return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, "Not enough Money");
-        }
+        }*/
+        return null;
 
 
     }
@@ -152,7 +155,117 @@ public class EconManager implements Economy {
         return null;
     }
 
-    
+    @Override
+    public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, double amount){
+        return null;
+    }
+
+    @Override
+    public EconomyResponse depositPlayer(String sender, String receiver, double amount){
+        return null;
+    }
+
+    @Override
+    public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, String receiver, double amount){
+        return null;
+    }
+
+    @Override
+    public EconomyResponse createBank(String name, String player){
+        return null;
+    }
+
+    @Override
+    public EconomyResponse createBank(String name, OfflinePlayer offlinePlayer){
+        return null;
+    }
+
+    @Override
+    public EconomyResponse deleteBank(String name){
+        return null;
+    }
+
+    @Override
+    public EconomyResponse bankBalance(String name){
+        return null;
+    }
+
+    @Override
+    public EconomyResponse bankHas(String name, double amount){
+        return null;
+    }
+
+    @Override
+    public EconomyResponse bankWithdraw(String name, double amount){
+        return null;
+    }
+
+    @Override
+    public EconomyResponse bankDeposit(String name, double amount){
+        return null;
+    }
+
+    @Override
+    public EconomyResponse isBankOwner(String name, String player){
+        return null;
+    }
+
+    @Override
+    public EconomyResponse isBankOwner(String name, OfflinePlayer player){
+        return null;
+    }
+
+    @Override
+    public EconomyResponse isBankMember(String name, String player){
+        return null;
+    }
+
+    @Override
+    public EconomyResponse isBankMember(String name, OfflinePlayer player){
+        return null;
+    }
+
+    @Override
+    public List<String> getBanks(){
+        return null;
+    }
+
+    @Override
+    public boolean createPlayerAccount(String uuid){
+        //Add functions to create player acount
+        return false;
+    }
+
+    @Override
+    public boolean createPlayerAccount(OfflinePlayer player){
+        //Add functions to create player acount
+        return false;
+    }
+
+    @Override
+    public boolean createPlayerAccount(String uuid, String world){
+        return false;
+    }
+
+    @Override
+    public boolean createPlayerAccount(OfflinePlayer offlinePlayer, String world){
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

@@ -4,21 +4,31 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 
 
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wnut.EcoNut.Commands.Economy.Balance;
 import org.wnut.EcoNut.Commands.Economy.Pay;
 import org.wnut.EcoNut.Listeners.WnutListener;
+import org.wnut.EcoNut.Managers.ConfigManager;
 import org.wnut.EcoNut.Managers.EconManager;
+import sun.security.krb5.Config;
+
+import java.io.File;
 
 public class EcoNut extends JavaPlugin {
+
+    private static EcoNut plugin;
 
     private static Economy econ = null;
     private static Permission perms = null;
 
+
+
     @Override
     public void onEnable(){
+        plugin = this;
         getLogger().info("EcoNut Enabled");
         if(!setupEconomy()){
             getServer().getPluginManager().disablePlugin(this);
@@ -27,6 +37,10 @@ public class EcoNut extends JavaPlugin {
         }
 
         setupPermissions();
+
+
+        ConfigManager.createDefaultConfig();
+        ConfigManager.createPlayers();
 
         this.getCommand("pay").setExecutor(new Pay());
         this.getCommand("balance").setExecutor(new Balance());
@@ -45,7 +59,7 @@ public class EcoNut extends JavaPlugin {
             getLogger().info("No Vault");
             return false;
         }
-        getServer().getServicesManager().register(Economy.class, EconManager, this, ServicePriority.High);
+        getServer().getServicesManager().register(Economy.class, new EconManager(), this, ServicePriority.High);
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             getLogger().info("RSP Null");
@@ -68,5 +82,10 @@ public class EcoNut extends JavaPlugin {
     public static Permission getPermissions(){
         return perms;
     }
+
+    public static EcoNut getPlugin() {
+        return plugin;
+    }
+
 
 }
