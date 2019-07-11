@@ -2,7 +2,11 @@ name: EcoNut
 version: 0.0.1-alpha
 main: org.wnut.EcoNut.EcoNut
 author: Siriuo
-command:
+softdepend: [Vault]
+commands:
     pay:
       description: Pay a user
       usage: /pay
+    balance:
+      description: Display Balance
+      usage: /balance

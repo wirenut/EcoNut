@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.wnut.EcoNut.EcoNut;
 
-public class Pay  implements CommandExecutor {
+public class Pay implements CommandExecutor {
 
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
