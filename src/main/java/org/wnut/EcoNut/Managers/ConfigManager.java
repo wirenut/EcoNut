@@ -11,47 +11,73 @@ import java.io.IOException;
 public class ConfigManager {
 
     // Players Config file to store player data
-    private static File playersConfigFile;
-    private static FileConfiguration playersConfig;
+    private static File file;
+    private static FileConfiguration config;
 
-    public static void createPlayers() {
-        playersConfigFile = new File(Bukkit.getServer().getPluginManager().getPlugin("EcoNut").getDataFolder(), "players.yml");
-        if (!playersConfigFile.exists()) {
+    protected static String fileName;
+
+    public ConfigManager(String fileName){
+        this.fileName = fileName;
+    }
+
+
+    public void setup() {
+        file = new File(Bukkit.getServer().getPluginManager().getPlugin("EcoNut").getDataFolder(), fileName + ".yml");
+        if (!file.exists()) {
             try {
-                playersConfigFile.createNewFile();
+                file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-        playersConfig = new YamlConfiguration().loadConfiguration(playersConfigFile);
+        config = new YamlConfiguration().loadConfiguration(file);
     }
 
-    public static FileConfiguration getPlayersConfig() {
-        return playersConfig;
+    public static FileConfiguration get() {
+        return config;
     }
 
-    public static void savePlayersConfig() {
+    public static void save() {
         try {
-            playersConfig.save(playersConfigFile);
+            config.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void reload(){
-        playersConfig = YamlConfiguration.loadConfiguration(playersConfigFile);
+    public String get(String key){
+        return String.valueOf(config.get(key));
     }
 
-    public static void createPlayer(String uuid, String name){
-        playersConfig.set(uuid, name);
-        savePlayersConfig();
+    public static void reload(){
+        config = YamlConfiguration.loadConfiguration(file);
+    }
+
+    public void create(String key, String value){
+        config.set(key, value);
+        save();
+    }
+
+    public boolean keyExists(String key){
+        if (config.isSet(key)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
     public static void createDefaultConfig(){
+        // Create default configs using config.yml
         EcoNut.getPlugin().getConfig().options().copyDefaults();
         EcoNut.getPlugin().saveDefaultConfig();
+
+        // Create data directory if not exists
+        File dataFile = new File(Bukkit.getServer().getPluginManager().getPlugin("EcoNut").getDataFolder(), "data");
+        if (!dataFile.exists()){
+            dataFile.mkdir();
+        }
 
     }
 

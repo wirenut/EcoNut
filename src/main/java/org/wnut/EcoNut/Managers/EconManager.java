@@ -6,7 +6,9 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.wnut.EcoNut.Configurations.Accounts;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,18 +36,18 @@ public class EconManager implements Economy {
     }
 
     @Override
-    public String format(double v){
-        return "Nutty Coins";
+    public String format(double amount){
+        return new DecimalFormat("#").format(amount).toString() + " NC";
     }
 
     @Override
     public String currencyNamePlural(){
-        return "Nutty Coins";
+        return  null;
     }
 
     @Override
     public String currencyNameSingular(){
-        return "Nutty Coins";
+        return null;
     }
 
     @Override
@@ -74,25 +76,31 @@ public class EconManager implements Economy {
 
     @Override
     public double getBalance(String uuid){
-        Integer balance = 0;
+        Accounts accounts = new Accounts(uuid);
+        Integer balance = accounts.balance();
         return balance;
     }
 
     @Override
     public double getBalance(OfflinePlayer offlinePlayer){
-        Integer balance = 0;
+        String uuid = String.valueOf(offlinePlayer.getUniqueId());
+        Accounts accounts = new Accounts(uuid);
+        Integer balance = accounts.balance();
         return balance;
     }
 
     @Override
     public double getBalance(String uuid, String worldName){
-        Integer balance = 0;
+        Accounts accounts = new Accounts(uuid);
+        Integer balance = accounts.balance();
         return balance;
     }
 
     @Override
     public double getBalance(OfflinePlayer offlinePlayer, String worldName){
-        Integer balance = 0;
+        String uuid = String.valueOf(offlinePlayer.getUniqueId());
+        Accounts accounts = new Accounts(uuid);
+        Integer balance = accounts.balance();
         return balance;
     }
 

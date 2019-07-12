@@ -2,20 +2,15 @@ package org.wnut.EcoNut;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-
-
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wnut.EcoNut.Commands.Economy.Balance;
 import org.wnut.EcoNut.Commands.Economy.Pay;
+import org.wnut.EcoNut.Configurations.Players;
 import org.wnut.EcoNut.Listeners.WnutListener;
 import org.wnut.EcoNut.Managers.ConfigManager;
 import org.wnut.EcoNut.Managers.EconManager;
-import sun.security.krb5.Config;
-
-import java.io.File;
 
 public class EcoNut extends JavaPlugin {
 
@@ -40,7 +35,8 @@ public class EcoNut extends JavaPlugin {
 
 
         ConfigManager.createDefaultConfig();
-        ConfigManager.createPlayers();
+
+
 
         this.getCommand("pay").setExecutor(new Pay());
         this.getCommand("balance").setExecutor(new Balance());

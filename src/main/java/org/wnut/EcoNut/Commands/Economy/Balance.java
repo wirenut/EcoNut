@@ -22,7 +22,7 @@ public class Balance implements CommandExecutor {
         }
 
 
-        sender.sendMessage(EcoNut.getEconomy().format(EcoNut.getEconomy().getBalance((OfflinePlayer) sender)));
+        sender.sendMessage("Your balance is: " + EcoNut.getEconomy().format(EcoNut.getEconomy().getBalance((OfflinePlayer) sender)));
 
         return true;
 
