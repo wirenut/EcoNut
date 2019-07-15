@@ -59,6 +59,26 @@ public class ConfigManager {
         save();
     }
 
+    public void create(String key, Integer value){
+        config.set(key, value);
+        save();
+    }
+
+    public void set(String key, String value){
+        config.set(key, value);
+        save();
+    }
+
+    public void set(String key, Integer value){
+        config.set(key, value);
+        save();
+    }
+
+    public void set(String key, double value){
+        config.set(key, value);
+        save();
+    }
+
     public boolean keyExists(String key){
         if (config.isSet(key)) {
             return true;

@@ -13,10 +13,32 @@ public class Accounts {
         configManager = new ConfigManager("data" + File.separator + uuid);
         configManager.setup();
 
-        if(!configManager.keyExists("balance")){
-            configManager.create("balance", String.valueOf(1000));
-        }
+        this.createDefault();
+    }
 
+    public static void createDefault(){
+        if(!configManager.keyExists("balance")){
+            configManager.create("balance", 1000);
+        }
+    }
+
+    public static boolean exists(String key){
+        if(configManager.keyExists(key)){
+            return true;
+        }
+        return false;
+    }
+
+    public void set(String key, String value){
+        configManager.set(key, value);
+    }
+
+    public void set(String key, Integer value){
+        configManager.set(key, value);
+    }
+
+    public void set(String key, double value){
+        configManager.set(key, value);
     }
 
     public static int balance(){

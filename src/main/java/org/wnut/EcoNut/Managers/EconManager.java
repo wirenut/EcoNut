@@ -3,14 +3,11 @@ package org.wnut.EcoNut.Managers;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.wnut.EcoNut.Configurations.Accounts;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.UUID;
 
 public class EconManager implements Economy {
 
@@ -21,7 +18,7 @@ public class EconManager implements Economy {
 
     @Override
     public String getName(){
-        return null;
+        return "EcoNut";
     }
 
 
@@ -50,30 +47,50 @@ public class EconManager implements Economy {
         return null;
     }
 
+
+
+    /// Check if account exists
     @Override
     public boolean hasAccount(String uuid){
-        // To add validate from econ players yml
+        Accounts accounts = new Accounts(uuid);
+        if(Accounts.exists("balance")) {
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean hasAccount(OfflinePlayer offlinePlayer){
-        //To add validate from econ players yml
+        String uuid = String.valueOf(offlinePlayer.getUniqueId());
+        Accounts accounts = new Accounts(uuid);
+        if(accounts.exists("balance")) {
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean hasAccount(String uuid, String worldName){
-        // To add validate from econ players yml
+        Accounts accounts = new Accounts(uuid);
+        if(accounts.exists("balance")) {
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean hasAccount(OfflinePlayer offlinePlayer, String worldName){
-        // To Validate from econ players yml
+        String uuid = String.valueOf(offlinePlayer.getUniqueId());
+        Accounts accounts = new Accounts(uuid);
+        if(accounts.exists("balance")) {
+            return true;
+        }
         return false;
     }
 
+
+
+    // Get balance of player
     @Override
     public double getBalance(String uuid){
         Accounts accounts = new Accounts(uuid);
@@ -104,63 +121,109 @@ public class EconManager implements Economy {
         return balance;
     }
 
+
+
+    // Check if player has an amount
     @Override
-    public boolean has(String uuid, double v){
+    public boolean has(String uuid, double amount){
         return false;
     }
 
     @Override
-    public boolean has(OfflinePlayer offlinePlayer, double v){
+    public boolean has(OfflinePlayer offlinePlayer, double amount){
         return false;
     }
 
     @Override
-    public boolean has(String uuid, String worldName, double v){
+    public boolean has(String uuid, String worldName, double amount){
         return false;
     }
 
     @Override
-    public boolean has(OfflinePlayer offlinePlayer, String worldName, double v){
+    public boolean has(OfflinePlayer offlinePlayer, String worldName, double amount){
         return false;
     }
+
+
 
     @Override
     public EconomyResponse withdrawPlayer(String uuid, double amount){
 
-        Player player = Bukkit.getPlayer(UUID.fromString(uuid));
+        if (hasAccount(uuid)){
+            double balance = getBalance(uuid);
 
-        /* if (hasAccount(uuid)){
-            double balance = 0;
-
-            return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.SUCCESS, "Paid Money");
-
-            return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, "Not enough Money");
-        }*/
-        return null;
-
+            if(balance >= amount){
+                balance -= amount;
+                Accounts accounts = new Accounts(uuid);
+                accounts.set("balance", balance);
+                return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.SUCCESS, "You paid " + amount + "!");
+            }else{
+                return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, "You do not have enough money!");
+            }
+        }
+        return new EconomyResponse(amount, 0, EconomyResponse.ResponseType.FAILURE, "You do not have an account!");
 
     }
 
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer offlinePlayer, double amount){
-        return null;
+        String uuid = String.valueOf(offlinePlayer.getUniqueId());
+        if (hasAccount(uuid)){
+            double balance = getBalance(uuid);
+
+            if(balance >= amount){
+                balance -= amount;
+                Accounts accounts = new Accounts(uuid);
+                accounts.set("balance", balance);
+                return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.SUCCESS, "You paid " + amount + "!");
+            }else{
+                return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, "You do not have enough money!");
+            }
+        }
+        return new EconomyResponse(amount, 0, EconomyResponse.ResponseType.FAILURE, "You do not have an account!");
+
     }
 
     @Override
     public EconomyResponse withdrawPlayer(String uuid, String world, double amount){
-        return null;
+        if (hasAccount(uuid)){
+            double balance = getBalance(uuid);
+
+            if(balance >= amount){
+                balance -= amount;
+                Accounts accounts = new Accounts(uuid);
+                accounts.set("balance", balance);
+                return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.SUCCESS, "You paid " + amount + "!");
+            }else{
+                return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, "You do not have enough money!");
+            }
+        }
+        return new EconomyResponse(amount, 0, EconomyResponse.ResponseType.FAILURE, "You do not have an account!");
     }
 
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer offlinePlayer, String world, double amount){
-        return null;
+        String uuid = String.valueOf(offlinePlayer.getUniqueId());
+        if (hasAccount(uuid)){
+            double balance = getBalance(uuid);
+
+            if(balance >= amount){
+                balance -= amount;
+                Accounts accounts = new Accounts(uuid);
+                accounts.set("balance", balance);
+                return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.SUCCESS, "You paid " + amount + "!");
+            }else{
+                return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, "You do not have enough money!");
+            }
+        }
+        return new EconomyResponse(amount, 0, EconomyResponse.ResponseType.FAILURE, "You do not have an account!");
     }
 
 
 
     @Override
     public EconomyResponse depositPlayer(String uuid, double amount){
-        return null;
+       return null;
     }
 
     @Override
@@ -177,6 +240,8 @@ public class EconManager implements Economy {
     public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, String receiver, double amount){
         return null;
     }
+
+
 
     @Override
     public EconomyResponse createBank(String name, String player){
