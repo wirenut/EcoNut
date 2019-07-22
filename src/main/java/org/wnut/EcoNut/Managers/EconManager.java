@@ -126,21 +126,39 @@ public class EconManager implements Economy {
     // Check if player has an amount
     @Override
     public boolean has(String uuid, double amount){
+        Accounts accounts = new Accounts(uuid);
+        if(accounts.balance() >= amount){
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean has(OfflinePlayer offlinePlayer, double amount){
+        String uuid = offlinePlayer.getUniqueId().toString();
+        Accounts accounts = new Accounts(uuid);
+        if(accounts.balance() >= amount){
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean has(String uuid, String worldName, double amount){
+        Accounts accounts = new Accounts(uuid);
+        if(accounts.balance() >= amount){
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean has(OfflinePlayer offlinePlayer, String worldName, double amount){
+        String uuid = offlinePlayer.getUniqueId().toString();
+        Accounts accounts = new Accounts(uuid);
+        if(accounts.balance() >= amount){
+            return true;
+        }
         return false;
     }
 
@@ -223,21 +241,36 @@ public class EconManager implements Economy {
 
     @Override
     public EconomyResponse depositPlayer(String uuid, double amount){
-       return null;
+
+        Accounts accounts = new Accounts(uuid);
+
+        accounts.set("balance", accounts.balance() + amount);
+        return null;
     }
 
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, double amount){
+        String uuid = offlinePlayer.getUniqueId().toString();
+        Accounts accounts = new Accounts(uuid);
+
+        accounts.set("balance", accounts.balance() + amount);
         return null;
     }
 
     @Override
-    public EconomyResponse depositPlayer(String sender, String receiver, double amount){
+    public EconomyResponse depositPlayer(String uuid, String worldName, double amount){
+        Accounts accounts = new Accounts(uuid);
+
+        accounts.set("balance", accounts.balance() + amount);
         return null;
     }
 
     @Override
-    public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, String receiver, double amount){
+    public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, String worldName, double amount){
+        String uuid = offlinePlayer.getUniqueId().toString();
+        Accounts accounts = new Accounts(uuid);
+
+        accounts.set("balance", accounts.balance() + amount);
         return null;
     }
 
@@ -253,6 +286,8 @@ public class EconManager implements Economy {
         return null;
     }
 
+
+
     @Override
     public EconomyResponse deleteBank(String name){
         return null;
@@ -263,20 +298,32 @@ public class EconManager implements Economy {
         return null;
     }
 
+
+
+
     @Override
     public EconomyResponse bankHas(String name, double amount){
         return null;
     }
+
+
+
 
     @Override
     public EconomyResponse bankWithdraw(String name, double amount){
         return null;
     }
 
+
+
+
     @Override
     public EconomyResponse bankDeposit(String name, double amount){
         return null;
     }
+
+
+
 
     @Override
     public EconomyResponse isBankOwner(String name, String player){
@@ -288,6 +335,9 @@ public class EconManager implements Economy {
         return null;
     }
 
+
+
+
     @Override
     public EconomyResponse isBankMember(String name, String player){
         return null;
@@ -298,47 +348,41 @@ public class EconManager implements Economy {
         return null;
     }
 
+
+
+
     @Override
     public List<String> getBanks(){
         return null;
     }
 
+
+
+
     @Override
     public boolean createPlayerAccount(String uuid){
-        //Add functions to create player acount
-        return false;
+        Accounts accounts = new Accounts(uuid);
+        return true;
     }
 
     @Override
-    public boolean createPlayerAccount(OfflinePlayer player){
-        //Add functions to create player acount
-        return false;
+    public boolean createPlayerAccount(OfflinePlayer offlinePlayer){
+        String uuid = offlinePlayer.getUniqueId().toString();
+        Accounts accounts = new Accounts(uuid);
+        return true;
     }
 
     @Override
     public boolean createPlayerAccount(String uuid, String world){
-        return false;
+        Accounts accounts = new Accounts(uuid);
+        return true;
     }
 
     @Override
     public boolean createPlayerAccount(OfflinePlayer offlinePlayer, String world){
-        return false;
+        String uuid = offlinePlayer.getUniqueId().toString();
+        Accounts accounts = new Accounts(uuid);
+        return true;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

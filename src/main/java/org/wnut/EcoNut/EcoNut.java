@@ -7,7 +7,6 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wnut.EcoNut.Commands.Economy.Balance;
 import org.wnut.EcoNut.Commands.Economy.Pay;
-import org.wnut.EcoNut.Configurations.Players;
 import org.wnut.EcoNut.Listeners.WnutListener;
 import org.wnut.EcoNut.Managers.ConfigManager;
 import org.wnut.EcoNut.Managers.EconManager;
@@ -36,10 +35,11 @@ public class EcoNut extends JavaPlugin {
 
         ConfigManager.createDefaultConfig();
 
-
+        //this.getCommand("playtime").setExecutor(new Playtime());
 
         this.getCommand("pay").setExecutor(new Pay());
         this.getCommand("balance").setExecutor(new Balance());
+
         getServer().getPluginManager().registerEvents(new WnutListener(), this);
     }
 
