@@ -20,7 +20,6 @@ public class ConfigManager {
         this.fileName = fileName;
     }
 
-
     public void setup() {
         file = new File(Bukkit.getServer().getPluginManager().getPlugin("EcoNut").getDataFolder(), fileName + ".yml");
         if (!file.exists()) {
@@ -34,10 +33,6 @@ public class ConfigManager {
         config = new YamlConfiguration().loadConfiguration(file);
     }
 
-    public static FileConfiguration get() {
-        return config;
-    }
-
     public static void save() {
         try {
             config.save(file);
@@ -47,7 +42,7 @@ public class ConfigManager {
     }
 
     public String get(String key){
-        return String.valueOf(config.get(key));
+        return config.getString(key);
     }
 
     public static void reload(){
@@ -87,7 +82,6 @@ public class ConfigManager {
         }
     }
 
-
     public static void createDefaultConfig(){
         // Create default configs using config.yml
         EcoNut.getPlugin().getConfig().options().copyDefaults();
@@ -100,5 +94,6 @@ public class ConfigManager {
         }
 
     }
+
 
 }

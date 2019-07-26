@@ -7,6 +7,7 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wnut.EcoNut.Commands.Economy.Balance;
 import org.wnut.EcoNut.Commands.Economy.Pay;
+import org.wnut.EcoNut.Configurations.Players;
 import org.wnut.EcoNut.Listeners.WnutListener;
 import org.wnut.EcoNut.Managers.ConfigManager;
 import org.wnut.EcoNut.Managers.EconManager;
@@ -17,8 +18,6 @@ public class EcoNut extends JavaPlugin {
 
     private static Economy econ = null;
     private static Permission perms = null;
-
-
 
     @Override
     public void onEnable(){
@@ -82,6 +81,5 @@ public class EcoNut extends JavaPlugin {
     public static EcoNut getPlugin() {
         return plugin;
     }
-
 
 }

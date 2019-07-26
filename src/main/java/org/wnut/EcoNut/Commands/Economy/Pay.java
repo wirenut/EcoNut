@@ -1,14 +1,16 @@
 package org.wnut.EcoNut.Commands.Economy;
 
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.wnut.EcoNut.Configurations.Players;
 import org.wnut.EcoNut.EcoNut;
+
+import java.util.UUID;
+
+import static org.wnut.EcoNut.EcoNut.getEconomy;
 
 public class Pay implements CommandExecutor {
 
@@ -17,37 +19,34 @@ public class Pay implements CommandExecutor {
 
 
         if(!EcoNut.getPermissions().has(sender, "wnut.economy.pay")){
-
+            sender.sendMessage("You do not have permissions to run this command!");
             return false;
         }
 
-        Player player = Bukkit.getPlayer(args[0]);
+        Players players = new Players();
 
-        Double amount = Double.valueOf(args[1]);
+        OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(players.getUuid(sender.getName())));
+        OfflinePlayer recipient = Bukkit.getOfflinePlayer(UUID.fromString(players.getUuid(args[0])));
+
+        double amount = Double.valueOf(args[1]);
 
 
-        if (player == null) {
+        if(!getEconomy().has(player, amount)){
+            sender.sendMessage("You do not have enough money!");
             return false;
         }
 
-
-        if (EcoNut.getEconomy().has((OfflinePlayer) sender, amount)){
-
-            EconomyResponse senderResponse = EcoNut.getEconomy().withdrawPlayer((OfflinePlayer) sender, amount);
-
-            if(!senderResponse.transactionSuccess()){
-                sender.sendMessage(String.format("An error occured!"));
-            }
-
-            EconomyResponse playerResponse = EcoNut.getEconomy().depositPlayer(player, amount);
-
-            if(!playerResponse.transactionSuccess()){
-                sender.sendMessage(String.format("An error occured!"));
-            }
-
-            sender.sendMessage(String.format("You have transferred " + player.toString() + " " + amount.toString() + " nutty coins"));
-            return true;
+        if(recipient == null){
+            sender.sendMessage("Recipient does not exist!");
+            return false;
         }
-        return false;
+
+        getEconomy().depositPlayer(recipient, amount);
+        getEconomy().withdrawPlayer(player, amount);
+
+        sender.sendMessage("You transferred " + amount + "to " + recipient.getName());
+
+
+        return true;
     }
 }

@@ -13,7 +13,9 @@ public class WnutListener implements Listener{
         String player = e.getPlayer().getName();
         String uuid = e.getPlayer().getUniqueId().toString();
 
-        Players players = new Players(uuid, player);
+        Players players = new Players();
+        players.create(uuid, player);
+
         Accounts accounts = new Accounts(uuid);
 
     }

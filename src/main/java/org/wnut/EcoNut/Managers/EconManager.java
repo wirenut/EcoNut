@@ -244,7 +244,7 @@ public class EconManager implements Economy {
 
         Accounts accounts = new Accounts(uuid);
 
-        accounts.set("balance", accounts.balance() + amount);
+        accounts.set("balance", new DecimalFormat("#").format(accounts.balance() + amount));
         return null;
     }
 
@@ -253,7 +253,7 @@ public class EconManager implements Economy {
         String uuid = offlinePlayer.getUniqueId().toString();
         Accounts accounts = new Accounts(uuid);
 
-        accounts.set("balance", accounts.balance() + amount);
+        accounts.set("balance", new DecimalFormat("#").format(accounts.balance() + amount));
         return null;
     }
 
@@ -261,7 +261,7 @@ public class EconManager implements Economy {
     public EconomyResponse depositPlayer(String uuid, String worldName, double amount){
         Accounts accounts = new Accounts(uuid);
 
-        accounts.set("balance", accounts.balance() + amount);
+        accounts.set("balance", new DecimalFormat("#").format(accounts.balance() + amount));
         return null;
     }
 
@@ -270,7 +270,7 @@ public class EconManager implements Economy {
         String uuid = offlinePlayer.getUniqueId().toString();
         Accounts accounts = new Accounts(uuid);
 
-        accounts.set("balance", accounts.balance() + amount);
+        accounts.set("balance", new DecimalFormat("#").format(accounts.balance() + amount));
         return null;
     }
 
